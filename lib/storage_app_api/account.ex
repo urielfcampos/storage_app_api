@@ -49,6 +49,21 @@ defmodule StorageApp.Account do
       {:error, %Ecto.Changeset{}}
 
   """
+  def get_user_by_email_and_password(nil, _password), do: {:error, :invalid}
+  def get_user_by_email_and_password(_email, nil), do: {:error, :invalid}
+
+  def get_user_by_email_and_password(email, password) do
+    with %User{} = user <- Repo.get_by(User, email: String.downcase(email)),
+         true <- Argon2.verify_pass(password, user.password_hash) do
+      {:ok, user}
+    else
+      _ ->
+        #To mitigate timing attacks
+        Argon2.no_user_verify()
+        {:error, :unauthorized}
+    end
+  end
+
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.changeset(attrs)

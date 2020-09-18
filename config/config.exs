@@ -28,6 +28,25 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :ueberauth, Ueberauth,
+  base_path: "/api/auth",
+  providers: [
+    identity: {Ueberauth.Strategy.Identity, [
+      callback_methods: ["POST"],
+      nickname_field: :email,
+      param_nesting: "user",
+      uid_field: :email
+    ]}
+  ]
+
+config :storage_app_api, StorageApp.Guardian,
+  issuer: "storage_app_api",
+  secret_key: System.get_env("STORAGE_APP_SECRET")
+
+config :storage_app_api, StorageAppWeb.Plug.AuthAccessPipeline,
+  module: StorageApp.Guardian,
+  error_handler: StorageAppWeb.Plug.AuthErrorHandler
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

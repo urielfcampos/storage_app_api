@@ -7,6 +7,7 @@ defmodule StorageApp.Repo.Migrations.CreateUsers do
       add :email, :string, null: false
       add :is_active, :boolean, default: false, null: false
       add :password_hash, :string
+      add :permissions, :map
       timestamps()
     end
 

@@ -5,8 +5,21 @@ defmodule StorageAppWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated do
+    plug StorageAppWeb.Plug.AuthAccessPipeline
+  end
+
   scope "/api", StorageAppWeb do
     pipe_through :api
+
+    scope "/auth" do
+      post "/identity/callback", AuthController, :identity_callback
+    end
+
+    pipe_through :authenticated
+
+    resources "/users", UserController, except: [:new, :edit]
+
   end
 
   # Enables LiveDashboard only for development

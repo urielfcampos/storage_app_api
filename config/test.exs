@@ -20,4 +20,4 @@ config :storage_app_api, StorageAppWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-config :bcrypt_elixir, :log_rounds, 4
+config :argon2_elixir, :t_cost, 1

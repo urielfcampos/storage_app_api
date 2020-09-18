@@ -1,4 +1,7 @@
 defmodule StorageApp.Account.User do
+  @moduledoc """
+    Module for user schema
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,6 +12,7 @@ defmodule StorageApp.Account.User do
     field :is_active, :boolean, default: false
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :permissions, :map
 
     timestamps()
   end
@@ -16,14 +20,14 @@ defmodule StorageApp.Account.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :is_active, :password])
-    |> validate_required([:email, :is_active, :password])
+    |> cast(attrs, [:email, :is_active, :password, :permissions])
+    |> validate_required([:email, :is_active, :password, :permissions])
     |> unique_constraint(:email)
     |> hash_password()
   end
 
   defp hash_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, Bcrypt.add_hash(password))
+    change(changeset, password_hash: Argon2.hash_pwd_salt(password))
   end
 
   defp hash_password(changeset) do

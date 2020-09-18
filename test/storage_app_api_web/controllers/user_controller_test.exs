@@ -7,12 +7,14 @@ defmodule StorageAppWeb.UserControllerTest do
   @create_attrs %{
     email: "some email",
     is_active: true,
-    password: "some password"
+    password: "some password",
+    permissions: %{guest: true, admin: false}
   }
   @update_attrs %{
     email: "some updated email",
     is_active: false,
-    password: "some updated password"
+    password: "some updated password",
+    permissions: %{guest: true, admin: false}
   }
   @invalid_attrs %{email: nil, is_active: nil, password: nil}
 
@@ -43,7 +45,6 @@ defmodule StorageAppWeb.UserControllerTest do
                "id" => id,
                "email" => "some email",
                "is_active" => true,
-               "password" => "some password"
              } = json_response(conn, 200)["data"]
     end
 
@@ -66,7 +67,6 @@ defmodule StorageAppWeb.UserControllerTest do
                "id" => id,
                "email" => "some updated email",
                "is_active" => false,
-               "password" => "some updated password"
              } = json_response(conn, 200)["data"]
     end
 

@@ -1,4 +1,7 @@
 defmodule StorageAppWeb.Telemetry do
+  @moduledoc """
+  Phoenix telemetry module
+  """
   use Supervisor
   import Telemetry.Metrics
 
