@@ -7,6 +7,7 @@ defmodule StorageAppWeb.Router do
 
   pipeline :authenticated do
     plug StorageAppWeb.Plug.AuthAccessPipeline
+    plug StorageAppWeb.Plug.Permissions
   end
 
   scope "/api", StorageAppWeb do

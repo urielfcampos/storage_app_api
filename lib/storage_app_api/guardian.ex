@@ -3,6 +3,7 @@ defmodule StorageApp.Guardian do
   Implements the Guardian module
   """
   use Guardian, otp_app: :storage_app_api
+
   def subject_for_token(%{id: id}, _claims) do
     {:ok, to_string(id)}
   end
@@ -18,4 +19,5 @@ defmodule StorageApp.Guardian do
   def resource_from_claims(_claims) do
     {:error, :no_claims_sub}
   end
+
 end

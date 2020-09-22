@@ -6,7 +6,7 @@ defmodule StorageApp.Companies.Company do
   @foreign_key_type :binary_id
   schema "companies" do
     field :name, :string
-
+    many_to_many :products, StorageApp.Products.Product, join_through: "company_products"
     timestamps()
   end
 

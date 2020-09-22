@@ -9,6 +9,8 @@ defmodule StorageApp.Products.Product do
     field :price, :decimal
     field :quantity, :integer
     field :unit, :string
+    many_to_many :companies, StorageApp.Companies.Company, join_through: "company_products"
+    many_to_many :orders, StorageApp.Orders.Order, join_through: "order_products"
 
     timestamps()
   end

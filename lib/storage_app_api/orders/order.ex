@@ -6,6 +6,11 @@ defmodule StorageApp.Orders.Order do
   @foreign_key_type :binary_id
   schema "orders" do
 
+    belongs_to :sender, StorageApp.Companies.Company
+    belongs_to :receiver, StorageApp.Companies.Company
+    has_many :products, StorageApp.Products.Product
+    belongs_to :operator, StorageApp.Account.User
+    field :fulfilled, :boolean
     timestamps()
   end
 

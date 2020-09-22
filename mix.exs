@@ -48,6 +48,7 @@ defmodule StorageApp.MixProject do
       {:ueberauth, "~> 0.6"},
       {:ueberauth_identity, "~> 0.3"},
       {:guardian, "~> 2.0"},
+      {:guardian_phoenix, "~> 2.0"}
     ]
   end
 
