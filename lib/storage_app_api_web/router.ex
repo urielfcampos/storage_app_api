@@ -7,7 +7,6 @@ defmodule StorageAppWeb.Router do
 
   pipeline :authenticated do
     plug StorageAppWeb.Plug.AuthAccessPipeline
-    plug StorageAppWeb.Plug.Permissions
   end
 
   scope "/api", StorageAppWeb do
@@ -20,6 +19,10 @@ defmodule StorageAppWeb.Router do
     pipe_through :authenticated
 
     resources "/users", UserController, except: [:new, :edit]
+
+    resources "/products", ProductController
+
+    resources "/companies", CompanyController
 
   end
 

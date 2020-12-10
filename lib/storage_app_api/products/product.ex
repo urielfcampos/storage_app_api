@@ -4,14 +4,12 @@ defmodule StorageApp.Products.Product do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "products" do
+  schema "product" do
     field :name, :string
     field :price, :decimal
     field :quantity, :integer
     field :unit, :string
-    many_to_many :companies, StorageApp.Companies.Company, join_through: "company_products"
-    many_to_many :orders, StorageApp.Orders.Order, join_through: "order_products"
-
+    belongs_to :company, StorageApp.Companies.Company
     timestamps()
   end
 

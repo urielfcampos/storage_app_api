@@ -3,25 +3,31 @@ defmodule StorageApp.ProductsTest do
 
   alias StorageApp.Products
 
-  describe "products" do
+  describe "product" do
     alias StorageApp.Products.Product
 
     @valid_attrs %{name: "some name", price: "120.5", quantity: 42, unit: "some unit"}
-    @update_attrs %{name: "some updated name", price: "456.7", quantity: 43, unit: "some updated unit"}
+    @update_attrs %{
+      name: "some updated name",
+      price: "456.7",
+      quantity: 43,
+      unit: "some updated unit"
+    }
     @invalid_attrs %{name: nil, price: nil, quantity: nil, unit: nil}
 
-    def product_fixture(attrs \\ %{}) do
-      {:ok, product} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Products.create_product()
+    def product_fixture(__attrs \\ %{}) do
+      {:ok, company} =
+        %{name: "Atma"}
+        |> StorageApp.Companies.create_company()
+
+      {:ok, product} = Products.create_product(company.id, @valid_attrs)
 
       product
     end
 
-    test "list_products/0 returns all products" do
+    test "list_product/0 returns all product" do
       product = product_fixture()
-      assert Products.list_products() == [product]
+      assert Products.list_product() == [product]
     end
 
     test "get_product!/1 returns the product with given id" do
@@ -30,7 +36,10 @@ defmodule StorageApp.ProductsTest do
     end
 
     test "create_product/1 with valid data creates a product" do
-      assert {:ok, %Product{} = product} = Products.create_product(@valid_attrs)
+      {:ok, company} =
+        %{name: "Test company"}
+        |> StorageApp.Companies.create_company()
+      assert {:ok, %Product{} = product} = Products.create_product(company.id, @valid_attrs)
       assert product.name == "some name"
       assert product.price == Decimal.new("120.5")
       assert product.quantity == 42

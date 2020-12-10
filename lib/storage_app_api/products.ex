@@ -9,15 +9,15 @@ defmodule StorageApp.Products do
   alias StorageApp.Products.Product
 
   @doc """
-  Returns the list of products.
+  Returns the list of product.
 
   ## Examples
 
-      iex> list_products()
+      iex> list_product()
       [%Product{}, ...]
 
   """
-  def list_products do
+  def list_product do
     Repo.all(Product)
   end
 
@@ -49,8 +49,8 @@ defmodule StorageApp.Products do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_product(attrs \\ %{}) do
-    %Product{}
+  def create_product(company_id, attrs \\ %{}) do
+    %Product{company_id: company_id}
     |> Product.changeset(attrs)
     |> Repo.insert()
   end
